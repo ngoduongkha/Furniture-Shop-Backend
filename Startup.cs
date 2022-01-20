@@ -1,18 +1,11 @@
 using Furniture_Shop_Backend.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Furniture_Shop_Backend
 {
@@ -29,8 +22,9 @@ namespace Furniture_Shop_Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<FurnitureShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FurnitureShopConnectionString")));
-            
+
+            services.AddDbContext<FurnitureShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FurnitureShopDB")));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Furniture_Shop_Backend", Version = "v1" });

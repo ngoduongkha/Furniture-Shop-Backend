@@ -1,0 +1,1 @@
+Scaffold-DbContext -Connection Name=FurnitureShopDB Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force

@@ -14,12 +14,13 @@ namespace Furniture_Shop_Backend.Models
         }
 
         public int Id { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
+        public int? RoleId { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
-        public byte[] CreatedAt { get; set; }
+        public byte[] CreateAt { get; set; }
         public string Image { get; set; }
 
+        public virtual Role Role { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
     }

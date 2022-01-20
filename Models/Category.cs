@@ -9,15 +9,17 @@ namespace Furniture_Shop_Backend.Models
     {
         public Category()
         {
+            InverseParent = new HashSet<Category>();
             Products = new HashSet<Product>();
-            Topics = new HashSet<Topic>();
         }
 
         public int Id { get; set; }
-        public string Displayname { get; set; }
-        public string Discription { get; set; }
+        public int? ParentId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
+        public virtual Category Parent { get; set; }
+        public virtual ICollection<Category> InverseParent { get; set; }
         public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<Topic> Topics { get; set; }
     }
 }

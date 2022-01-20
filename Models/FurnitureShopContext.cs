@@ -19,7 +19,6 @@ namespace Furniture_Shop_Backend.Models
 
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Discount> Discounts { get; set; }
         public virtual DbSet<Import> Imports { get; set; }
         public virtual DbSet<ImportDetail> ImportDetails { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
@@ -27,14 +26,14 @@ namespace Furniture_Shop_Backend.Models
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<Topic> Topics { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Voucher> Vouchers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=FurnitureShop;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Name=FurnitureShopDB");
             }
         }
 
@@ -44,299 +43,187 @@ namespace Furniture_Shop_Backend.Models
 
             modelBuilder.Entity<Brand>(entity =>
             {
-                entity.ToTable("brand");
+                entity.ToTable("Brand");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Description).HasMaxLength(255);
 
-                entity.Property(e => e.Description)
-                    .HasMaxLength(255)
-                    .HasColumnName("description");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(255)
-                    .HasColumnName("name");
+                entity.Property(e => e.Name).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Category>(entity =>
             {
-                entity.ToTable("category");
+                entity.ToTable("Category");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Description).HasMaxLength(255);
 
-                entity.Property(e => e.Discription)
-                    .HasMaxLength(255)
-                    .HasColumnName("discription");
+                entity.Property(e => e.Name).HasMaxLength(255);
 
-                entity.Property(e => e.Displayname)
-                    .HasMaxLength(255)
-                    .HasColumnName("displayname");
-            });
-
-            modelBuilder.Entity<Discount>(entity =>
-            {
-                entity.ToTable("discount");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(255)
-                    .HasColumnName("description");
-
-                entity.Property(e => e.EndAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("endAt");
-
-                entity.Property(e => e.IsMoney).HasColumnName("isMoney");
-
-                entity.Property(e => e.MaxValue)
-                    .HasColumnType("money")
-                    .HasColumnName("maxValue");
-
-                entity.Property(e => e.MinPurchase)
-                    .HasColumnType("money")
-                    .HasColumnName("minPurchase");
-
-                entity.Property(e => e.Percentage).HasColumnName("percentage");
-
-                entity.Property(e => e.StartAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("startAt");
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.InverseParent)
+                    .HasForeignKey(d => d.ParentId)
+                    .HasConstraintName("FK__Category__Parent__398D8EEE");
             });
 
             modelBuilder.Entity<Import>(entity =>
             {
-                entity.ToTable("import");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Cost)
-                    .HasColumnType("money")
-                    .HasColumnName("cost");
-
-                entity.Property(e => e.CreatedAt)
-                    .IsRequired()
-                    .IsRowVersion()
-                    .IsConcurrencyToken()
-                    .HasColumnName("created_at");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(255)
-                    .HasColumnName("description");
-            });
-
-            modelBuilder.Entity<ImportDetail>(entity =>
-            {
-                entity.ToTable("import_detail");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Cost).HasColumnName("cost");
-
-                entity.Property(e => e.ImportId).HasColumnName("import_id");
-
-                entity.Property(e => e.ProductId).HasColumnName("product_id");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-                entity.HasOne(d => d.Import)
-                    .WithMany(p => p.ImportDetails)
-                    .HasForeignKey(d => d.ImportId)
-                    .HasConstraintName("FK__import_de__impor__403A8C7D");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.ImportDetails)
-                    .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__import_de__produ__412EB0B6");
-            });
-
-            modelBuilder.Entity<Invoice>(entity =>
-            {
-                entity.ToTable("invoice");
-
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.ToTable("Import");
 
                 entity.Property(e => e.CreateAt)
                     .IsRequired()
                     .IsRowVersion()
-                    .IsConcurrencyToken()
-                    .HasColumnName("create_at");
+                    .IsConcurrencyToken();
 
-                entity.Property(e => e.DeliveryStatus)
-                    .HasMaxLength(255)
-                    .HasColumnName("delivery_status");
+                entity.Property(e => e.Description).HasMaxLength(255);
 
-                entity.Property(e => e.DiscountId).HasColumnName("discount_id");
+                entity.Property(e => e.TotalCost).HasColumnType("money");
+            });
 
-                entity.Property(e => e.PaymentStatus)
-                    .HasMaxLength(255)
-                    .HasColumnName("payment_status");
+            modelBuilder.Entity<ImportDetail>(entity =>
+            {
+                entity.HasKey(e => new { e.ImportId, e.ProductId })
+                    .HasName("PK__ImportDe__4DD7AB86DB17A273");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.ToTable("ImportDetail");
 
-                entity.HasOne(d => d.Discount)
-                    .WithMany(p => p.Invoices)
-                    .HasForeignKey(d => d.DiscountId)
-                    .HasConstraintName("FK__invoice__discoun__3E52440B");
+                entity.HasOne(d => d.Import)
+                    .WithMany(p => p.ImportDetails)
+                    .HasForeignKey(d => d.ImportId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ImportDet__Impor__3B75D760");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ImportDetails)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ImportDet__Produ__3C69FB99");
+            });
+
+            modelBuilder.Entity<Invoice>(entity =>
+            {
+                entity.ToTable("Invoice");
+
+                entity.Property(e => e.CreateAt)
+                    .IsRequired()
+                    .IsRowVersion()
+                    .IsConcurrencyToken();
+
+                entity.Property(e => e.DeliveryStatus).HasMaxLength(255);
+
+                entity.Property(e => e.PaymentStatus).HasMaxLength(255);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Invoices)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__invoice__user_id__3D5E1FD2");
+                    .HasConstraintName("FK__Invoice__UserId__412EB0B6");
             });
 
             modelBuilder.Entity<InvoiceDetail>(entity =>
             {
-                entity.ToTable("invoice_detail");
+                entity.HasKey(e => new { e.InvoiceId, e.ProductId })
+                    .HasName("PK__InvoiceD__1CD666D9E5D7B31D");
 
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.InvoiceId).HasColumnName("invoice_id");
-
-                entity.Property(e => e.ProductId).HasColumnName("product_id");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-                entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
+                entity.ToTable("InvoiceDetail");
 
                 entity.HasOne(d => d.Invoice)
                     .WithMany(p => p.InvoiceDetails)
                     .HasForeignKey(d => d.InvoiceId)
-                    .HasConstraintName("FK__invoice_d__invoi__4222D4EF");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__InvoiceDe__Invoi__3D5E1FD2");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.InvoiceDetails)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__invoice_d__produ__4316F928");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__InvoiceDe__Produ__403A8C7D");
             });
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.ToTable("product");
+                entity.ToTable("Product");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Description).HasMaxLength(255);
 
-                entity.Property(e => e.BrandId).HasColumnName("brand_id");
+                entity.Property(e => e.Image).HasMaxLength(255);
 
-                entity.Property(e => e.CategoryId).HasColumnName("category_id");
+                entity.Property(e => e.Material).HasMaxLength(255);
 
-                entity.Property(e => e.Cost).HasColumnName("cost");
+                entity.Property(e => e.Price).HasColumnType("money");
 
-                entity.Property(e => e.Discription)
-                    .HasMaxLength(255)
-                    .HasColumnName("discription");
-
-                entity.Property(e => e.Image)
-                    .HasMaxLength(255)
-                    .HasColumnName("image");
-
-                entity.Property(e => e.Material)
-                    .HasMaxLength(255)
-                    .HasColumnName("material");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-                entity.Property(e => e.Size)
-                    .HasMaxLength(255)
-                    .HasColumnName("size");
+                entity.Property(e => e.Size).HasMaxLength(255);
 
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__product__brand_i__3B75D760");
+                    .HasConstraintName("FK__Product__BrandId__3F466844");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__product__categor__3C69FB99");
+                    .HasConstraintName("FK__Product__Categor__3E52440B");
             });
 
             modelBuilder.Entity<Rating>(entity =>
             {
-                entity.ToTable("rating");
+                entity.ToTable("Rating");
 
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(255)
-                    .HasColumnName("description");
-
-                entity.Property(e => e.ProductId).HasColumnName("product_id");
-
-                entity.Property(e => e.Score).HasColumnName("score");
-
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.Description).HasMaxLength(255);
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Ratings)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__rating__product___3A81B327");
+                    .HasConstraintName("FK__Rating__ProductI__38996AB5");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Ratings)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__rating__user_id__398D8EEE");
+                    .HasConstraintName("FK__Rating__UserId__37A5467C");
             });
 
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.ToTable("role");
+                entity.ToTable("Role");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Description).HasMaxLength(255);
 
-                entity.Property(e => e.Discription)
-                    .HasMaxLength(255)
-                    .HasColumnName("discription");
-            });
-
-            modelBuilder.Entity<Topic>(entity =>
-            {
-                entity.ToTable("topic");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.CategoryId).HasColumnName("category_id");
-
-                entity.Property(e => e.Discription)
-                    .HasMaxLength(255)
-                    .HasColumnName("discription");
-
-                entity.Property(e => e.Displayname)
-                    .HasMaxLength(255)
-                    .HasColumnName("displayname");
-
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Topics)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__topic__category___3F466844");
+                entity.Property(e => e.Name).HasMaxLength(255);
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("user");
+                entity.ToTable("User");
 
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.CreatedAt)
+                entity.Property(e => e.CreateAt)
                     .IsRequired()
                     .IsRowVersion()
-                    .IsConcurrencyToken()
-                    .HasColumnName("created_at");
+                    .IsConcurrencyToken();
 
-                entity.Property(e => e.Email)
-                    .HasMaxLength(255)
-                    .HasColumnName("email");
-
-                entity.Property(e => e.FullName)
-                    .HasMaxLength(255)
-                    .HasColumnName("full_name");
-
-                entity.Property(e => e.Image)
-                    .HasMaxLength(255)
-                    .HasColumnName("image");
+                entity.Property(e => e.Image).HasMaxLength(255);
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(255)
-                    .HasColumnName("password");
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Username).HasMaxLength(255);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.RoleId)
+                    .HasConstraintName("FK__User__RoleId__3A81B327");
+            });
+
+            modelBuilder.Entity<Voucher>(entity =>
+            {
+                entity.ToTable("Voucher");
+
+                entity.Property(e => e.Description).HasMaxLength(255);
+
+                entity.Property(e => e.EndAt).HasColumnType("datetime");
+
+                entity.Property(e => e.MinPurchase).HasColumnType("money");
+
+                entity.Property(e => e.StartAt).HasColumnType("datetime");
+
+                entity.Property(e => e.Value).HasColumnType("money");
             });
 
             OnModelCreatingPartial(modelBuilder);

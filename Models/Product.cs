@@ -19,9 +19,9 @@ namespace Furniture_Shop_Backend.Models
         public int? BrandId { get; set; }
         public string Material { get; set; }
         public string Size { get; set; }
-        public string Discription { get; set; }
+        public string Description { get; set; }
         public int? Quantity { get; set; }
-        public int? Cost { get; set; }
+        public decimal? Price { get; set; }
         public string Image { get; set; }
 
         public virtual Brand Brand { get; set; }
