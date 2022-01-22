@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Furniture_Shop_Backend.Models;
 
 #nullable disable
 
@@ -81,7 +82,7 @@ namespace Furniture_Shop_Backend.Models
             modelBuilder.Entity<ImportDetail>(entity =>
             {
                 entity.HasKey(e => new { e.ImportId, e.ProductId })
-                    .HasName("PK__ImportDe__4DD7AB86DB17A273");
+                    .HasName("PK__ImportDe__4DD7AB864C989DE1");
 
                 entity.ToTable("ImportDetail");
 
@@ -120,7 +121,7 @@ namespace Furniture_Shop_Backend.Models
             modelBuilder.Entity<InvoiceDetail>(entity =>
             {
                 entity.HasKey(e => new { e.InvoiceId, e.ProductId })
-                    .HasName("PK__InvoiceD__1CD666D9E5D7B31D");
+                    .HasName("PK__InvoiceD__1CD666D9C3F2550D");
 
                 entity.ToTable("InvoiceDetail");
 
@@ -230,5 +231,7 @@ namespace Furniture_Shop_Backend.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<Furniture_Shop_Backend.Models.Discount> Discount { get; set; }
     }
 }
