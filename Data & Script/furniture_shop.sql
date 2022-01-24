@@ -38,9 +38,11 @@ GO
 
 CREATE TABLE [Product] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
+  [ProductBasetId] nvarchar(255),
   [CategoryId] int,
   [BrandId] int,
-  [Material] nvarchar(255),
+  [MaterialId] int,
+  [Name] nvarchar(255),
   [Size] nvarchar(255),
   [Description] nvarchar(255),
   [Quantity] int,
@@ -104,6 +106,21 @@ CREATE TABLE [Rating] (
 )
 GO
 
+CREATE TABLE [Material] (
+  [Id] int PRIMARY KEY IDENTITY(1, 1),
+  [Name] nvarchar(255),
+  [Description] nvarchar(255)
+)
+GO
+
+CREATE TABLE [ProductImage] (
+  [Url] nvarchar(255),
+  [ProductId] int,
+  [ProductBasetId] nvarchar(255),
+  [Priority] int
+)
+GO
+
 ALTER TABLE [Rating] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
 GO
 
@@ -135,5 +152,11 @@ ALTER TABLE [InvoiceDetail] ADD FOREIGN KEY ([ProductId]) REFERENCES [Product] (
 GO
 
 ALTER TABLE [Invoice] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
+GO
+
+ALTER TABLE [Product] ADD FOREIGN KEY ([MaterialId]) REFERENCES [Material] ([Id])
+GO
+
+ALTER TABLE [ProductImage] ADD FOREIGN KEY ([ProductId]) REFERENCES [Product] ([Id])
 GO
 

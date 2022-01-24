@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Furniture_Shop_Backend.Models
 {
-    public partial class Brand
+    public partial class Material
     {
-        public Brand()
+        public Material()
         {
             Products = new HashSet<Product>();
         }
@@ -17,6 +17,5 @@ namespace Furniture_Shop_Backend.Models
         public string Description { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
-        public object BrandId { get; internal set; }
     }
 }

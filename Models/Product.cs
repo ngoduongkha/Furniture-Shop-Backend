@@ -15,9 +15,10 @@ namespace Furniture_Shop_Backend.Models
         }
 
         public int Id { get; set; }
+        public string ProductBasetId { get; set; }
         public int? CategoryId { get; set; }
         public int? BrandId { get; set; }
-        public string Material { get; set; }
+        public int? MaterialId { get; set; }
         public string Size { get; set; }
         public string Description { get; set; }
         public int? Quantity { get; set; }
@@ -26,6 +27,7 @@ namespace Furniture_Shop_Backend.Models
 
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
+        public virtual Material Material { get; set; }
         public virtual ICollection<ImportDetail> ImportDetails { get; set; }
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
