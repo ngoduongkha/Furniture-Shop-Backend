@@ -9,6 +9,7 @@ using Furniture_Shop_Backend.Models;
 using Furniture_Shop_Backend.Services.Products;
 using Furniture_Shop_Backend.ViewModels.Product;
 using Furniture_Shop_Backend.ViewModels.Common;
+using Furniture_Shop_Backend.Services.ProductImages;
 
 namespace Furniture_Shop_Backend.Controllers
 {
@@ -17,24 +18,26 @@ namespace Furniture_Shop_Backend.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
+        private readonly IProductImagesService _productImagesService;
 
-        public ProductsController(IProductService context)
+        public ProductsController(IProductService context, IProductImagesService productImagesService)
         {
             _productService = context;
+            _productImagesService = productImagesService;
         }
 
         // GET: api/Products
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory()
+        [HttpGet("paging-by-category")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory([FromQuery] GetProductPagingRequest request)
         {
-            // return await _context.Products.ToListAsync();
-            return NoContent();
+            var product = await _productService.GetAllByCategoryId(request);
+            return Ok(product);
         }
-        [HttpGet("paging")]
+        [HttpGet("paging-all")]
         public async Task<IActionResult> GetProducts([FromQuery] GetProductPagingRequest request)
         {
-                // return await _context.Products.ToListAsync();
-                return NoContent();
+            var product = await _productService.GetAllPaging(request);
+            return Ok(product);
         }
 
             // GET: api/Products/5
@@ -74,8 +77,20 @@ namespace Furniture_Shop_Backend.Controllers
             return BadRequest(result.Message);
             return Ok();
         }
-            // DELETE: api/Products/5
-            [HttpDelete("{id}")]
+        [HttpPost("set-images")]
+        public async Task<ActionResult> SetImages([FromBody] ImagesCreate request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _productImagesService.setUrlImages(request.ProductBaseId, request.urlsImage);
+            if (!result.IsSuccessed)
+            return BadRequest(result.Message);
+            return Ok();
+        }
+        // DELETE: api/Products/5
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
                 return NoContent();

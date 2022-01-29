@@ -114,6 +114,7 @@ CREATE TABLE [Material] (
 GO
 
 CREATE TABLE [ProductImage] (
+  [Id] int PRIMARY KEY IDENTITY(1, 1),
   [Url] nvarchar(255),
   [ProductId] int,
   [ProductBasetId] nvarchar(255),

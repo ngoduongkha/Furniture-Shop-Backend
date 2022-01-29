@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Furniture_Shop_Backend.Models;
 
 #nullable disable
 
@@ -64,7 +63,7 @@ namespace Furniture_Shop_Backend.Models
                 entity.HasOne(d => d.Parent)
                     .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
-                    .HasConstraintName("FK__Category__Parent__3C69FB99");
+                    .HasConstraintName("FK__Category__Parent__3D5E1FD2");
             });
 
             modelBuilder.Entity<Import>(entity =>
@@ -84,7 +83,7 @@ namespace Furniture_Shop_Backend.Models
             modelBuilder.Entity<ImportDetail>(entity =>
             {
                 entity.HasKey(e => new { e.ImportId, e.ProductId })
-                    .HasName("PK__ImportDe__4DD7AB86DB17A273");
+                    .HasName("PK__ImportDe__4DD7AB8657874846");
 
                 entity.ToTable("ImportDetail");
 
@@ -92,13 +91,13 @@ namespace Furniture_Shop_Backend.Models
                     .WithMany(p => p.ImportDetails)
                     .HasForeignKey(d => d.ImportId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ImportDet__Impor__3E52440B");
+                    .HasConstraintName("FK__ImportDet__Impor__3F466844");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ImportDetails)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ImportDet__Produ__3F466844");
+                    .HasConstraintName("FK__ImportDet__Produ__403A8C7D");
             });
 
             modelBuilder.Entity<Invoice>(entity =>
@@ -117,13 +116,13 @@ namespace Furniture_Shop_Backend.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Invoices)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Invoice__UserId__440B1D61");
+                    .HasConstraintName("FK__Invoice__UserId__44FF419A");
             });
 
             modelBuilder.Entity<InvoiceDetail>(entity =>
             {
                 entity.HasKey(e => new { e.InvoiceId, e.ProductId })
-                    .HasName("PK__InvoiceD__1CD666D9E5D7B31D");
+                    .HasName("PK__InvoiceD__1CD666D97A18A0CB");
 
                 entity.ToTable("InvoiceDetail");
 
@@ -131,13 +130,13 @@ namespace Furniture_Shop_Backend.Models
                     .WithMany(p => p.InvoiceDetails)
                     .HasForeignKey(d => d.InvoiceId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__InvoiceDe__Invoi__403A8C7D");
+                    .HasConstraintName("FK__InvoiceDe__Invoi__412EB0B6");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.InvoiceDetails)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__InvoiceDe__Produ__4316F928");
+                    .HasConstraintName("FK__InvoiceDe__Produ__440B1D61");
             });
 
             modelBuilder.Entity<Material>(entity =>
@@ -157,6 +156,8 @@ namespace Furniture_Shop_Backend.Models
 
                 entity.Property(e => e.Image).HasMaxLength(255);
 
+                entity.Property(e => e.Name).HasMaxLength(255);
+
                 entity.Property(e => e.Price).HasColumnType("money");
 
                 entity.Property(e => e.ProductBasetId).HasMaxLength(255);
@@ -166,31 +167,31 @@ namespace Furniture_Shop_Backend.Models
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__Product__BrandId__4222D4EF");
+                    .HasConstraintName("FK__Product__BrandId__4316F928");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__Product__Categor__412EB0B6");
+                    .HasConstraintName("FK__Product__Categor__4222D4EF");
 
                 entity.HasOne(d => d.Material)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.MaterialId)
-                    .HasConstraintName("FK__Product__Materia__44FF419A");
+                    .HasConstraintName("FK__Product__Materia__45F365D3");
             });
 
             modelBuilder.Entity<ProductImage>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("ProductImage");
+
+                entity.Property(e => e.ProductBasetId).HasMaxLength(255);
 
                 entity.Property(e => e.Url).HasMaxLength(255);
 
                 entity.HasOne(d => d.Product)
-                    .WithMany()
+                    .WithMany(p => p.ProductImages)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__ProductIm__Produ__45F365D3");
+                    .HasConstraintName("FK__ProductIm__Produ__46E78A0C");
             });
 
             modelBuilder.Entity<Rating>(entity =>
@@ -202,12 +203,12 @@ namespace Furniture_Shop_Backend.Models
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Ratings)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__Rating__ProductI__3B75D760");
+                    .HasConstraintName("FK__Rating__ProductI__3C69FB99");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Ratings)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Rating__UserId__3A81B327");
+                    .HasConstraintName("FK__Rating__UserId__3B75D760");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -239,7 +240,7 @@ namespace Furniture_Shop_Backend.Models
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK__User__RoleId__3D5E1FD2");
+                    .HasConstraintName("FK__User__RoleId__3E52440B");
             });
 
             modelBuilder.Entity<Voucher>(entity =>
@@ -261,7 +262,5 @@ namespace Furniture_Shop_Backend.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-        public DbSet<Furniture_Shop_Backend.Models.Discount> Discount { get; set; }
     }
 }

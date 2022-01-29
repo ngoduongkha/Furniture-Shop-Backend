@@ -17,6 +17,5 @@ namespace Furniture_Shop_Backend.Models
         public string Description { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
-        public object BrandId { get; internal set; }
     }
 }

@@ -11,6 +11,7 @@ namespace Furniture_Shop_Backend.Models
         {
             ImportDetails = new HashSet<ImportDetail>();
             InvoiceDetails = new HashSet<InvoiceDetail>();
+            ProductImages = new HashSet<ProductImage>();
             Ratings = new HashSet<Rating>();
         }
 
@@ -19,6 +20,7 @@ namespace Furniture_Shop_Backend.Models
         public int? CategoryId { get; set; }
         public int? BrandId { get; set; }
         public int? MaterialId { get; set; }
+        public string Name { get; set; }
         public string Size { get; set; }
         public string Description { get; set; }
         public int? Quantity { get; set; }
@@ -30,6 +32,7 @@ namespace Furniture_Shop_Backend.Models
         public virtual Material Material { get; set; }
         public virtual ICollection<ImportDetail> ImportDetails { get; set; }
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
     }
 }
