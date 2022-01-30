@@ -3,12 +3,9 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Furniture_Shop_Backend.Models
-{
-    public partial class Discount
-    {
-        public Discount()
-        {
+namespace Furniture_Shop_Backend.Models {
+    public partial class Discount {
+        public Discount() {
             Invoices = new HashSet<Invoice>();
         }
 

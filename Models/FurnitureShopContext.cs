@@ -1,21 +1,14 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Furniture_Shop_Backend.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace Furniture_Shop_Backend.Models
-{
-    public partial class FurnitureShopContext : DbContext
-    {
-        public FurnitureShopContext()
-        {
+namespace Furniture_Shop_Backend.Models {
+    public partial class FurnitureShopContext : DbContext {
+        public FurnitureShopContext() {
         }
 
         public FurnitureShopContext(DbContextOptions<FurnitureShopContext> options)
-            : base(options)
-        {
+            : base(options) {
         }
 
         public virtual DbSet<Brand> Brands { get; set; }
@@ -32,43 +25,46 @@ namespace Furniture_Shop_Backend.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            if (!optionsBuilder.IsConfigured) {
                 optionsBuilder.UseSqlServer("Name=FurnitureShopDB");
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            modelBuilder.Entity<Brand>(entity =>
-            {
+            modelBuilder.Entity<Brand>(entity => {
                 entity.ToTable("Brand");
+
+                entity.HasIndex(e => e.Name, "UQ__Brand__737584F6CE844A26")
+                    .IsUnique();
 
                 entity.Property(e => e.Description).HasMaxLength(255);
 
-                entity.Property(e => e.Name).HasMaxLength(255);
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
             });
 
-            modelBuilder.Entity<Category>(entity =>
-            {
+            modelBuilder.Entity<Category>(entity => {
                 entity.ToTable("Category");
 
                 entity.Property(e => e.Description).HasMaxLength(255);
 
-                entity.Property(e => e.Name).HasMaxLength(255);
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.ParentId).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.Parent)
                     .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
-                    .HasConstraintName("FK__Category__Parent__3C69FB99");
+                    .HasConstraintName("FK__Category__Parent__412EB0B6");
             });
 
-            modelBuilder.Entity<Import>(entity =>
-            {
+            modelBuilder.Entity<Import>(entity => {
                 entity.ToTable("Import");
 
                 entity.Property(e => e.CreateAt)
@@ -81,10 +77,9 @@ namespace Furniture_Shop_Backend.Models
                 entity.Property(e => e.TotalCost).HasColumnType("money");
             });
 
-            modelBuilder.Entity<ImportDetail>(entity =>
-            {
+            modelBuilder.Entity<ImportDetail>(entity => {
                 entity.HasKey(e => new { e.ImportId, e.ProductId })
-                    .HasName("PK__ImportDe__4DD7AB86DB17A273");
+                    .HasName("PK__ImportDe__4DD7AB86F1D3AA3D");
 
                 entity.ToTable("ImportDetail");
 
@@ -92,17 +87,16 @@ namespace Furniture_Shop_Backend.Models
                     .WithMany(p => p.ImportDetails)
                     .HasForeignKey(d => d.ImportId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ImportDet__Impor__3E52440B");
+                    .HasConstraintName("FK__ImportDet__Impor__4316F928");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ImportDetails)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ImportDet__Produ__3F466844");
+                    .HasConstraintName("FK__ImportDet__Produ__440B1D61");
             });
 
-            modelBuilder.Entity<Invoice>(entity =>
-            {
+            modelBuilder.Entity<Invoice>(entity => {
                 entity.ToTable("Invoice");
 
                 entity.Property(e => e.CreateAt)
@@ -117,13 +111,12 @@ namespace Furniture_Shop_Backend.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Invoices)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Invoice__UserId__440B1D61");
+                    .HasConstraintName("FK__Invoice__UserId__48CFD27E");
             });
 
-            modelBuilder.Entity<InvoiceDetail>(entity =>
-            {
+            modelBuilder.Entity<InvoiceDetail>(entity => {
                 entity.HasKey(e => new { e.InvoiceId, e.ProductId })
-                    .HasName("PK__InvoiceD__1CD666D9E5D7B31D");
+                    .HasName("PK__InvoiceD__1CD666D91A445B9D");
 
                 entity.ToTable("InvoiceDetail");
 
@@ -131,31 +124,33 @@ namespace Furniture_Shop_Backend.Models
                     .WithMany(p => p.InvoiceDetails)
                     .HasForeignKey(d => d.InvoiceId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__InvoiceDe__Invoi__403A8C7D");
+                    .HasConstraintName("FK__InvoiceDe__Invoi__44FF419A");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.InvoiceDetails)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__InvoiceDe__Produ__4316F928");
+                    .HasConstraintName("FK__InvoiceDe__Produ__47DBAE45");
             });
 
-            modelBuilder.Entity<Material>(entity =>
-            {
+            modelBuilder.Entity<Material>(entity => {
                 entity.ToTable("Material");
 
                 entity.Property(e => e.Description).HasMaxLength(255);
 
-                entity.Property(e => e.Name).HasMaxLength(255);
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
             });
 
-            modelBuilder.Entity<Product>(entity =>
-            {
+            modelBuilder.Entity<Product>(entity => {
                 entity.ToTable("Product");
 
                 entity.Property(e => e.Description).HasMaxLength(255);
 
                 entity.Property(e => e.Image).HasMaxLength(255);
+
+                entity.Property(e => e.Name).HasMaxLength(255);
 
                 entity.Property(e => e.Price).HasColumnType("money");
 
@@ -166,35 +161,35 @@ namespace Furniture_Shop_Backend.Models
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__Product__BrandId__4222D4EF");
+                    .HasConstraintName("FK__Product__BrandId__46E78A0C");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__Product__Categor__412EB0B6");
+                    .HasConstraintName("FK__Product__Categor__45F365D3");
 
                 entity.HasOne(d => d.Material)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.MaterialId)
-                    .HasConstraintName("FK__Product__Materia__44FF419A");
+                    .HasConstraintName("FK__Product__Materia__49C3F6B7");
             });
 
-            modelBuilder.Entity<ProductImage>(entity =>
-            {
+            modelBuilder.Entity<ProductImage>(entity => {
                 entity.HasNoKey();
 
                 entity.ToTable("ProductImage");
+
+                entity.Property(e => e.ProductBasetId).HasMaxLength(255);
 
                 entity.Property(e => e.Url).HasMaxLength(255);
 
                 entity.HasOne(d => d.Product)
                     .WithMany()
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__ProductIm__Produ__45F365D3");
+                    .HasConstraintName("FK__ProductIm__Produ__4AB81AF0");
             });
 
-            modelBuilder.Entity<Rating>(entity =>
-            {
+            modelBuilder.Entity<Rating>(entity => {
                 entity.ToTable("Rating");
 
                 entity.Property(e => e.Description).HasMaxLength(255);
@@ -202,16 +197,15 @@ namespace Furniture_Shop_Backend.Models
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Ratings)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__Rating__ProductI__3B75D760");
+                    .HasConstraintName("FK__Rating__ProductI__403A8C7D");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Ratings)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Rating__UserId__3A81B327");
+                    .HasConstraintName("FK__Rating__UserId__3F466844");
             });
 
-            modelBuilder.Entity<Role>(entity =>
-            {
+            modelBuilder.Entity<Role>(entity => {
                 entity.ToTable("Role");
 
                 entity.Property(e => e.Description).HasMaxLength(255);
@@ -219,8 +213,7 @@ namespace Furniture_Shop_Backend.Models
                 entity.Property(e => e.Name).HasMaxLength(255);
             });
 
-            modelBuilder.Entity<User>(entity =>
-            {
+            modelBuilder.Entity<User>(entity => {
                 entity.ToTable("User");
 
                 entity.Property(e => e.CreateAt)
@@ -239,11 +232,10 @@ namespace Furniture_Shop_Backend.Models
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK__User__RoleId__3D5E1FD2");
+                    .HasConstraintName("FK__User__RoleId__4222D4EF");
             });
 
-            modelBuilder.Entity<Voucher>(entity =>
-            {
+            modelBuilder.Entity<Voucher>(entity => {
                 entity.ToTable("Voucher");
 
                 entity.Property(e => e.Description).HasMaxLength(255);
@@ -261,7 +253,5 @@ namespace Furniture_Shop_Backend.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-        public DbSet<Furniture_Shop_Backend.Models.Discount> Discount { get; set; }
     }
 }

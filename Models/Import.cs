@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
-namespace Furniture_Shop_Backend.Models
-{
-    public partial class Import
-    {
-        public Import()
-        {
+namespace Furniture_Shop_Backend.Models {
+    public partial class Import {
+        public Import() {
             ImportDetails = new HashSet<ImportDetail>();
         }
 

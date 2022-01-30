@@ -1,13 +1,9 @@
-﻿using Furniture_Shop_Backend.Models;
-using Furniture_Shop_Backend.ViewModels.Common;
+﻿using Furniture_Shop_Backend.ViewModels.Common;
 using Furniture_Shop_Backend.ViewModels.Product;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Furniture_Shop_Backend.Services.Products
-{
-    public interface IProductService
-    {
+namespace Furniture_Shop_Backend.Services {
+    public interface IProductService {
         Task<ApiResult<bool>> Create(ProductCreateRequest request);
 
         Task<ApiResult<ProductVm>> Update(int id, ProductUpdateRequest request);
@@ -18,6 +14,6 @@ namespace Furniture_Shop_Backend.Services.Products
 
         Task<PagedResult<ProductVm>> GetAllPaging(GetProductPagingRequest request);
 
-        Task<PagedResult<ProductVm>> GetAllByCategoryId( GetProductPagingRequest request);
+        Task<PagedResult<ProductVm>> GetAllByCategoryId(GetProductPagingRequest request);
     }
 }

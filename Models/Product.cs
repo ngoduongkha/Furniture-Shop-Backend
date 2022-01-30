@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
-namespace Furniture_Shop_Backend.Models
-{
-    public partial class Product
-    {
-        public Product()
-        {
+namespace Furniture_Shop_Backend.Models {
+    public partial class Product {
+        public Product() {
             ImportDetails = new HashSet<ImportDetail>();
             InvoiceDetails = new HashSet<InvoiceDetail>();
             Ratings = new HashSet<Rating>();
@@ -19,6 +15,7 @@ namespace Furniture_Shop_Backend.Models
         public int? CategoryId { get; set; }
         public int? BrandId { get; set; }
         public int? MaterialId { get; set; }
+        public string Name { get; set; }
         public string Size { get; set; }
         public string Description { get; set; }
         public int? Quantity { get; set; }

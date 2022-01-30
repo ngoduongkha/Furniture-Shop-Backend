@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-
-namespace Furniture_Shop_Backend.ViewModels.Product
-{
-    public class ProductCreateRequest
-    {
+﻿namespace Furniture_Shop_Backend.ViewModels.Product {
+    public class ProductCreateRequest {
         public string ProductBasetId { get; set; }
         public int CategoryId { set; get; }
         public int BrandId { get; set; }
@@ -12,6 +8,6 @@ namespace Furniture_Shop_Backend.ViewModels.Product
         public decimal Price { set; get; }
         public int Quantity { set; get; }
         public string Description { set; get; }
-        
+
     }
 }

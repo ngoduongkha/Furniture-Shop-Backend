@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
-namespace Furniture_Shop_Backend.Models
-{
-    public partial class User
-    {
-        public User()
-        {
+namespace Furniture_Shop_Backend.Models {
+    public partial class User {
+        public User() {
             Invoices = new HashSet<Invoice>();
             Ratings = new HashSet<Rating>();
         }
