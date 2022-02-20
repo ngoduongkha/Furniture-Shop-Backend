@@ -11,12 +11,8 @@ namespace Furniture_Shop_Backend.Services {
             _context = context;
         }
 
-        public Task<bool> CategoryExists(Category category) {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<int> CountExists(Category category) {
-            throw new System.NotImplementedException();
+        public async Task<bool> CategoryExists(Category category) {
+            return await _context.Categories.AnyAsync(e => e.Name == category.Name && e.IsDeleted == false);
         }
 
         public async Task<Category> DeleteCategory(Category category) {

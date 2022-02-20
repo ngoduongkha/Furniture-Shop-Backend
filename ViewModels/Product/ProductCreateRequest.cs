@@ -8,6 +8,5 @@
         public decimal Price { set; get; }
         public int Quantity { set; get; }
         public string Description { set; get; }
-
     }
 }

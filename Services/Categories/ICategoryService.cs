@@ -11,6 +11,5 @@ namespace Furniture_Shop_Backend.Services {
         Task<Category> DeleteCategory(Category category);
         Task<Category> DeleteCategory(int categoryId);
         Task<bool> CategoryExists(Category category);
-        Task<int> CountExists(Category category);
     }
 }

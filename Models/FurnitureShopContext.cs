@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Furniture_Shop_Backend.Models;
 
 #nullable disable
 
@@ -253,5 +254,7 @@ namespace Furniture_Shop_Backend.Models {
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<Furniture_Shop_Backend.Models.Discount> Discount { get; set; }
     }
 }

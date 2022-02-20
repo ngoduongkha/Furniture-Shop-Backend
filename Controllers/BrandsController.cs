@@ -120,13 +120,5 @@ namespace Furniture_Shop_Backend.Controllers {
                     Description = brand.Description
                 }).Result;
         }
-
-        private int CountExists(BrandViewModel brand) {
-            return _context.CountExists(
-                new Brand {
-                    Name = brand.Name,
-                    Description = brand.Description
-                }).Result;
-        }
     }
 }

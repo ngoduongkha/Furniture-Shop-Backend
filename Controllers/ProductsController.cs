@@ -17,23 +17,23 @@ namespace Furniture_Shop_Backend.Controllers {
         }
 
         // GET: api/Products
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory() {
-            // return await _context.Products.ToListAsync();
-            return NoContent();
-        }
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetProducts([FromQuery] GetProductPagingRequest request) {
-            // return await _context.Products.ToListAsync();
-            return NoContent();
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory() {
+        //    // return await _context.Products.ToListAsync();
+        //    return NoContent();
+        //}
+        //[HttpGet("paging")]
+        //public async Task<IActionResult> GetProducts([FromQuery] GetProductPagingRequest request) {
+        //    // return await _context.Products.ToListAsync();
+        //    return NoContent();
+        //}
 
-        // GET: api/Products/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id) {
-            return NoContent();
+        //// GET: api/Products/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Product>> GetProduct(int id) {
+        //    return NoContent();
 
-        }
+        //}
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -61,11 +61,9 @@ namespace Furniture_Shop_Backend.Controllers {
             return Ok();
         }
         // DELETE: api/Products/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id) {
-            return NoContent();
-        }
-
-
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteProduct(int id) {
+        //    return NoContent();
+        //}
     }
 }

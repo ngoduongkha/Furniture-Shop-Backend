@@ -23,7 +23,7 @@ GO
 
 CREATE TABLE [Brand] (
   [Id] INT PRIMARY KEY IDENTITY(1, 1),
-  [Name] NVARCHAR(255) UNIQUE NOT NULL,
+  [Name] NVARCHAR(255) NOT NULL,
   [Description] NVARCHAR(255),
   [IsDeleted] BIT DEFAULT(0) NOT NULL
 )
@@ -32,7 +32,7 @@ GO
 CREATE TABLE [Category] (
   [Id] INT PRIMARY KEY IDENTITY(1, 1),
   [ParentId] INT DEFAULT 0,
-  [Name] NVARCHAR(255) UNIQUE NOT NULL,
+  [Name] NVARCHAR(255) NOT NULL,
   [Description] NVARCHAR(255),
   [IsDeleted] BIT DEFAULT(0) NOT NULL
 )
@@ -40,7 +40,7 @@ GO
 
 CREATE TABLE [Product] (
   [Id] INT PRIMARY KEY IDENTITY(1, 1),
-  [ProductBasetId] NVARCHAR(255),
+  [ProductBaseId] NVARCHAR(255),
   [CategoryId] INT,
   [BrandId] INT,
   [MaterialId] INT,
@@ -119,7 +119,7 @@ GO
 CREATE TABLE [ProductImage] (
   [Url] NVARCHAR(255),
   [ProductId] INT,
-  [ProductBasetId] NVARCHAR(255),
+  [ProductBaseId] NVARCHAR(255),
   [Priority] INT
 )
 GO

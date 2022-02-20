@@ -11,6 +11,5 @@ namespace Furniture_Shop_Backend.Services {
         Task<Brand> DeleteBrand(Brand brand);
         Task<Brand> DeleteBrand(int brandId);
         Task<bool> BrandExists(Brand brand);
-        Task<int> CountExists(Brand brand);
     }
 }

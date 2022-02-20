@@ -47,10 +47,10 @@ namespace Furniture_Shop_Backend.Controllers {
 
         // PUT: api/Categories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(int id, Category category) {
-            return NoContent();
-        }
+        //[HttpPut("{id}")]
+        //public Task<IActionResult> PutCategory(int id, Category category) {
+        //    return NotFound();
+        //}
 
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -97,14 +97,6 @@ namespace Furniture_Shop_Backend.Controllers {
 
         private bool CategoryExists(CategoryViewModel category) {
             return _context.CategoryExists(
-                new Category {
-                    Name = category.Name,
-                    Description = category.Description
-                }).Result;
-        }
-
-        private int CountExists(CategoryViewModel category) {
-            return _context.CountExists(
                 new Category {
                     Name = category.Name,
                     Description = category.Description

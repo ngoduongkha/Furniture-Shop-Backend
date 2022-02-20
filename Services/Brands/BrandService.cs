@@ -1,6 +1,7 @@
 ﻿using Furniture_Shop_Backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Furniture_Shop_Backend.Services {
@@ -56,11 +57,8 @@ namespace Furniture_Shop_Backend.Services {
         }
 
         public async Task<bool> BrandExists(Brand brand) {
-            return await _context.Brands.AnyAsync(e => e.Name == brand.Name && e.IsDeleted == false);
-        }
-
-        public async Task<int> CountExists(Brand brand) {
-            return await _context.Brands.CountAsync(e => e.Name == brand.Name && e.IsDeleted == false);
+            return await _context.Brands
+                .AnyAsync(e => e.Name == brand.Name && e.IsDeleted == false);
         }
     }
 }
