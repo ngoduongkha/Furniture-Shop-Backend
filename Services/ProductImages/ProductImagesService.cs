@@ -10,8 +10,7 @@ namespace Furniture_Shop_Backend.Services.ProductImages
     public class ProductImagesService : IProductImagesService
     {
         private readonly FurnitureShopContext _context;
-        public ProductImagesService(FurnitureShopContext context)
-        {
+        public ProductImagesService(FurnitureShopContext context) {
             _context = context;
         }
 

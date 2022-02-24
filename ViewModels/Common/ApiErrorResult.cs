@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Furniture_Shop_Backend.ViewModels.Common
-{
-    public class ApiErrorResult<T> : ApiResult<T>
-    {
+﻿namespace Furniture_Shop_Backend.ViewModels.Common {
+    public class ApiErrorResult<T> : ApiResult<T> {
         public string[] ValidationErrors { get; set; }
 
-        public ApiErrorResult()
-        {
+        public ApiErrorResult() {
         }
 
-        public ApiErrorResult(string message)
-        {
+        public ApiErrorResult(string message) {
             IsSuccessed = false;
             Message = message;
         }
 
-        public ApiErrorResult(string[] validationErrors)
-        {
+        public ApiErrorResult(string[] validationErrors) {
             IsSuccessed = false;
             ValidationErrors = validationErrors;
         }

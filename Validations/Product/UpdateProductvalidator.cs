@@ -1,12 +1,9 @@
 ﻿using FluentValidation;
 using Furniture_Shop_Backend.ViewModels.Product;
 
-namespace Furniture_Shop_Backend.Validations.Product
-{
-    public class UpdateProductvalidator : AbstractValidator<ProductUpdateRequest>
-    {
-        public UpdateProductvalidator()
-        {
+namespace Furniture_Shop_Backend.Validations.Product {
+    public class UpdateProductvalidator : AbstractValidator<ProductUpdateRequest> {
+        public UpdateProductvalidator() {
             RuleFor(x => x.CategoryId).NotNull().WithMessage("CategoryId is not null. If you don't want update this field please set 0");
             RuleFor(x => x.BrandId).NotNull().WithMessage("BrnadId is not null. If you don't want update this field please set 0");
             RuleFor(x => x.MaterialId).NotNull().WithMessage("MaterialId is not null. If you don't want update this field please set 0");

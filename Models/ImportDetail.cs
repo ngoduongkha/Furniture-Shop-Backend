@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable disable
 
-#nullable disable
-
-namespace Furniture_Shop_Backend.Models
-{
-    public partial class ImportDetail
-    {
+namespace Furniture_Shop_Backend.Models {
+    public partial class ImportDetail {
         public int ImportId { get; set; }
         public int ProductId { get; set; }
         public int? Quantity { get; set; }

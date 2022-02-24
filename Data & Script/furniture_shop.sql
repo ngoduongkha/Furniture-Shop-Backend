@@ -5,111 +5,114 @@ USE FurnitureShop
 GO
 
 CREATE TABLE [User] (
-  [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [RoleId] int,
-  [Username] nvarchar(255),
-  [Password] varchar(64),
-  [CreateAt] timestamp,
-  [Image] nvarchar(255)
+  [Id] INT PRIMARY KEY IDENTITY(1, 1),
+  [RoleId] INT,
+  [Username] NVARCHAR(255),
+  [Password] VARCHAR(64),
+  [CreateAt] TIMESTAMP,
+  [Image] NVARCHAR(255)
 )
 GO
 
 CREATE TABLE [Role] (
-  [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [Name] nvarchar(255),
-  [Description] nvarchar(255)
+  [Id] INT PRIMARY KEY IDENTITY(1, 1),
+  [Name] NVARCHAR(255),
+  [Description] NVARCHAR(255)
 )
 GO
 
 CREATE TABLE [Brand] (
-  [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [Name] nvarchar(255),
-  [Description] nvarchar(255)
+  [Id] INT PRIMARY KEY IDENTITY(1, 1),
+  [Name] NVARCHAR(255) NOT NULL,
+  [Description] NVARCHAR(255),
+  [IsDeleted] BIT DEFAULT(0) NOT NULL
 )
 GO
 
 CREATE TABLE [Category] (
-  [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [ParentId] int,
-  [Name] nvarchar(255),
-  [Description] nvarchar(255)
+  [Id] INT PRIMARY KEY IDENTITY(1, 1),
+  [ParentId] INT DEFAULT 0,
+  [Name] NVARCHAR(255) NOT NULL,
+  [Description] NVARCHAR(255),
+  [IsDeleted] BIT DEFAULT(0) NOT NULL
 )
 GO
 
 CREATE TABLE [Product] (
-  [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [ProductBasetId] nvarchar(255),
-  [CategoryId] int,
-  [BrandId] int,
-  [MaterialId] int,
-  [Name] nvarchar(255),
-  [Size] nvarchar(255),
-  [Description] nvarchar(255),
-  [Quantity] int,
-  [Price] money,
-  [Image] nvarchar(255)
+  [Id] INT PRIMARY KEY IDENTITY(1, 1),
+  [ProductBaseId] NVARCHAR(255),
+  [CategoryId] INT,
+  [BrandId] INT,
+  [MaterialId] INT,
+  [Name] NVARCHAR(255),
+  [Size] NVARCHAR(255),
+  [Description] NVARCHAR(255),
+  [Quantity] INT,
+  [Price] MONEY,
+  [Image] NVARCHAR(255)
 )
 GO
 
 CREATE TABLE [Import] (
-  [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [Description] nvarchar(255),
-  [CreateAt] timestamp,
-  [TotalCost] money
+  [Id] INT PRIMARY KEY IDENTITY(1, 1),
+  [Description] NVARCHAR(255),
+  [CreateAt] TIMESTAMP,
+  [TotalCost] MONEY
 )
 GO
 
 CREATE TABLE [ImportDetail] (
-  [ImportId] int,
-  [ProductId] int,
-  [Quantity] int,
-  [Cost] int,
+  [ImportId] INT,
+  [ProductId] INT,
+  [Quantity] INT,
+  [Cost] INT,
   PRIMARY KEY ([ImportId], [ProductId])
 )
 GO
 
 CREATE TABLE [Invoice] (
-  [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [UserId] int,
-  [CreateAt] timestamp,
-  [VoucherId] int,
-  [PaymentStatus] nvarchar(255),
-  [DeliveryStatus] nvarchar(255)
+  [Id] INT PRIMARY KEY IDENTITY(1, 1),
+  [UserId] INT,
+  [CreateAt] TIMESTAMP,
+  [VoucherId] INT,
+  [PaymentStatus] NVARCHAR(255),
+  [DeliveryStatus] NVARCHAR(255)
 )
 GO
 
 CREATE TABLE [Voucher] (
-  [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [Description] nvarchar(255),
-  [StartAt] datetime,
-  [EndAt] datetime,
-  [Value] money,
-  [MinPurchase] money
+  [Id] INT PRIMARY KEY IDENTITY(1, 1),
+  [Description] NVARCHAR(255),
+  [StartAt] DATETIME,
+  [EndAt] DATETIME,
+  [Value] MONEY,
+  [MinPurchase] MONEY
 )
 GO
 
 CREATE TABLE [InvoiceDetail] (
-  [InvoiceId] int,
-  [ProductId] int,
-  [Quantity] int,
-  [UnitPrice] int,
+  [InvoiceId] INT,
+  [ProductId] INT,
+  [Quantity] INT,
+  [UnitPrice] INT,
   PRIMARY KEY ([InvoiceId], [ProductId])
 )
 GO
 
 CREATE TABLE [Rating] (
-  [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [UserId] int,
-  [Score] int,
-  [Description] nvarchar(255),
-  [ProductId] int
+  [Id] INT PRIMARY KEY IDENTITY(1, 1),
+  [UserId] INT,
+  [Score] INT,
+  [Description] NVARCHAR(255),
+  [ProductId] INT
 )
 GO
 
 CREATE TABLE [Material] (
-  [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [Name] nvarchar(255),
-  [Description] nvarchar(255)
+  [Id] INT PRIMARY KEY IDENTITY(1, 1),
+  [Name] NVARCHAR(255) NOT NULL,
+  [Description] NVARCHAR(255),
+  [IsDeleted] BIT DEFAULT(0) NOT NULL,
 )
 GO
 
@@ -160,4 +163,3 @@ GO
 
 ALTER TABLE [ProductImage] ADD FOREIGN KEY ([ProductId]) REFERENCES [Product] ([Id])
 GO
-
