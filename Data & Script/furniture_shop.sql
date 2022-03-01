@@ -10,7 +10,8 @@ CREATE TABLE [User] (
   [Username] NVARCHAR(255),
   [Password] VARCHAR(64),
   [CreateAt] TIMESTAMP,
-  [Image] NVARCHAR(255)
+  [Image] NVARCHAR(255),
+  [IsDeleted] BIT DEFAULT(0) NOT NULL
 )
 GO
 
@@ -49,7 +50,8 @@ CREATE TABLE [Product] (
   [Description] NVARCHAR(255),
   [Quantity] INT,
   [Price] MONEY,
-  [Image] NVARCHAR(255)
+  [Image] NVARCHAR(255),
+  [IsDeleted] BIT DEFAULT(0) NOT NULL
 )
 GO
 
@@ -57,7 +59,8 @@ CREATE TABLE [Import] (
   [Id] INT PRIMARY KEY IDENTITY(1, 1),
   [Description] NVARCHAR(255),
   [CreateAt] DATETIME,
-  [TotalCost] MONEY
+  [TotalCost] MONEY,
+  [IsDeleted] BIT DEFAULT(0) NOT NULL
 )
 GO
 
@@ -78,7 +81,8 @@ CREATE TABLE [Invoice] (
   [Total] MONEY,
   [Destination] NVARCHAR(255),
   [PaymentStatus] NVARCHAR(255),
-  [DeliveryStatus] NVARCHAR(255)
+  [DeliveryStatus] NVARCHAR(255),
+  [IsDeleted] BIT DEFAULT(0) NOT NULL
 )
 GO
 
@@ -88,7 +92,8 @@ CREATE TABLE [Voucher] (
   [StartAt] DATETIME,
   [EndAt] DATETIME,
   [Value] MONEY,
-  [MinPurchase] MONEY
+  [MinPurchase] MONEY,
+  [IsDeleted] BIT DEFAULT(0) NOT NULL
 )
 GO
 
@@ -106,7 +111,8 @@ CREATE TABLE [Rating] (
   [UserId] INT,
   [Score] INT,
   [Description] NVARCHAR(255),
-  [ProductId] INT
+  [ProductId] INT,
+  [IsDeleted] BIT DEFAULT(0) NOT NULL
 )
 GO
 
