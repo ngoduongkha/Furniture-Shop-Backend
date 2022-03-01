@@ -56,7 +56,7 @@ GO
 CREATE TABLE [Import] (
   [Id] INT PRIMARY KEY IDENTITY(1, 1),
   [Description] NVARCHAR(255),
-  [CreateAt] TIMESTAMP,
+  [CreateAt] DATETIME,
   [TotalCost] MONEY
 )
 GO
@@ -65,7 +65,7 @@ CREATE TABLE [ImportDetail] (
   [ImportId] INT,
   [ProductId] INT,
   [Quantity] INT,
-  [Cost] INT,
+  [Cost] MONEY,
   PRIMARY KEY ([ImportId], [ProductId])
 )
 GO
@@ -73,8 +73,10 @@ GO
 CREATE TABLE [Invoice] (
   [Id] INT PRIMARY KEY IDENTITY(1, 1),
   [UserId] INT,
-  [CreateAt] TIMESTAMP,
+  [CreateAt] DATETIME,
   [VoucherId] INT,
+  [Total] MONEY,
+  [Destination] NVARCHAR(255),
   [PaymentStatus] NVARCHAR(255),
   [DeliveryStatus] NVARCHAR(255)
 )
@@ -94,7 +96,7 @@ CREATE TABLE [InvoiceDetail] (
   [InvoiceId] INT,
   [ProductId] INT,
   [Quantity] INT,
-  [UnitPrice] INT,
+  [UnitPrice] MONEY,
   PRIMARY KEY ([InvoiceId], [ProductId])
 )
 GO
