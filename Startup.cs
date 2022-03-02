@@ -1,6 +1,8 @@
 using FluentValidation.AspNetCore;
 using Furniture_Shop_Backend.Models;
 using Furniture_Shop_Backend.Services;
+using Furniture_Shop_Backend.Services.Orders;
+using Furniture_Shop_Backend.Services.ProductImages;
 using Furniture_Shop_Backend.Validations.Product;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +31,7 @@ namespace Furniture_Shop_Backend {
             });
 
             services.AddTransient<IBrandService, BrandService>();
+            services.AddTransient<IOrdersService, OrdersService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductImagesService, ProductImagesService>();
         }

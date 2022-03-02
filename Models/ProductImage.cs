@@ -1,7 +1,13 @@
-﻿#nullable disable
+﻿using System;
+using System.Collections.Generic;
 
-namespace Furniture_Shop_Backend.Models {
-    public partial class ProductImage {
+#nullable disable
+
+namespace Furniture_Shop_Backend.Models
+{
+    public partial class ProductImage
+    {
+        public int Id { get; set; }
         public string Url { get; set; }
         public int? ProductId { get; set; }
         public string ProductBasetId { get; set; }

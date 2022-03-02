@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\NewFolder1\**" />
+    <Content Remove="Services\NewFolder1\**" />
+    <EmbeddedResource Remove="Services\NewFolder1\**" />
+    <None Remove="Services\NewFolder1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Bricelam.EntityFrameworkCore.Pluralizer" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,6 +25,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Orders\" />
   </ItemGroup>
 
 </Project>

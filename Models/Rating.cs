@@ -1,7 +1,12 @@
-﻿#nullable disable
+﻿using System;
+using System.Collections.Generic;
 
-namespace Furniture_Shop_Backend.Models {
-    public partial class Rating {
+#nullable disable
+
+namespace Furniture_Shop_Backend.Models
+{
+    public partial class Rating
+    {
         public int Id { get; set; }
         public int? UserId { get; set; }
         public int? Score { get; set; }
