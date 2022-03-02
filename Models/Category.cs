@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 #nullable disable
 
-namespace Furniture_Shop_Backend.Models {
-    public partial class Category {
-        public Category() {
+namespace Furniture_Shop_Backend.Models
+{
+    public partial class Category
+    {
+        public Category()
+        {
             InverseParent = new HashSet<Category>();
             Products = new HashSet<Product>();
         }

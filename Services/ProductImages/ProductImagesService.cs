@@ -35,19 +35,26 @@ namespace Furniture_Shop_Backend.Services.ProductImages
         {   
             var queryP = from p in _context.Products
                          select p;
-            var rs = await queryP.Where(p => p.ProductBasetId.Equals(idProductbase)).FirstOrDefaultAsync();
-            if (rs == null)
+            var rs = await queryP.Where(p => p.ProductBaseId.Equals(idProductbase)).FirstOrDefaultAsync();
+            if (rs is null)
             {
                 return  new ApiErrorResult<bool>($"Can't find product with Produt base id: {idProductbase}");
             }
-            int dem = 1;
-           foreach(var item in urlImages)
+            int count = 1;
+            // delete all immage if exist
+            var del = await _context.ProductImages.Where(p => p.ProductBasetId == idProductbase).ToListAsync();
+            foreach(var image in del)
+            {
+                _context.ProductImages.Remove(image);
+            }
+            // set new images list
+            foreach(var item in urlImages)
             {
                 var productImage = new ProductImage()
                 {
                     ProductBasetId = idProductbase,
                     ProductId = 1,
-                    Priority = dem++,
+                    Priority = count++,
                     Url = item,
 
                 };

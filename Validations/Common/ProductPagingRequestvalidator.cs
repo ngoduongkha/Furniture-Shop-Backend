@@ -7,7 +7,7 @@ namespace Furniture_Shop_Backend.Validations.Common
     {
       public  ProductPagingRequestvalidator() 
         {
-            RuleFor(x => x.Keyword).NotNull();
+            RuleFor(x => x.Keyword).NotNull().WithMessage("cc");
             RuleFor(x => x.CategoryId).NotNull();
             RuleFor(x => x.SortBy).NotNull();
             RuleFor(x => x.PageIndex).NotNull();

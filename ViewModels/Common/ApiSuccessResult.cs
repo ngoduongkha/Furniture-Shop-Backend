@@ -5,7 +5,8 @@
             ResultObj = resultObj;
         }
 
-        public ApiSuccessResult() {
+        public ApiSuccessResult()
+        {
             IsSuccessed = true;
         }
     }
